@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "qr-admin-frontend",
+  "type": "static",
+  "build": {
+    "commands": ["npm run build"]
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
