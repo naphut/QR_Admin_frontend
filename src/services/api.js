@@ -5,6 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
   baseURL: API_URL,
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -33,6 +34,10 @@ api.interceptors.response.use(
       localStorage.removeItem('admin_user');
       window.location.href = '/admin/login';
       toast.error('Session expired. Please login again.');
+    } else if (error.code === 'ECONNABORTED') {
+      toast.error('Request timeout. Please check your connection.');
+    } else if (error.response?.status >= 500) {
+      toast.error('Server error. Please try again later.');
     }
     return Promise.reject(error);
   }
